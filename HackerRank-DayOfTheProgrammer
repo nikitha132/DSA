@@ -1,0 +1,33 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+def is_leap_julian(year):
+    return year % 4 == 0
+
+def is_leap_gregorian(year):
+    return year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)
+
+def dayOfProgrammer(year):
+    # Write your code here
+    if year >= 1700 and year <= 1917:
+        is_leap_year = is_leap_julian(year)
+    elif year >= 1919 and year <= 2700:
+        is_leap_year = is_leap_gregorian(year)
+    elif year==1918:
+        return "26.09.1918"
+    else:
+        return "Invalid Year"
+
+    if is_leap_year:
+        programmer_day = "12.09." + str(year)
+    else:
+        programmer_day = "13.09." + str(year)
+
+    return programmer_day
+    
+

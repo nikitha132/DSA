@@ -1,0 +1,28 @@
+# your code goes here
+t = int(input())
+for _ in range(t):
+    n, k = map(int, input().split())
+    cat = list(map(int, input().split()))
+    t_values = list(map(int, input().split()))
+
+    m = []
+    for i in range(n):
+        m.append((t_values[i], cat[i]))
+
+    m.sort()
+
+    sum_val = 0
+    meal = set()
+
+    for x in m:
+        # if the category is not found in the meal
+        if x[1] not in meal:
+            meal.add(x[1])
+            sum_val += x[0]
+            if len(meal) == k:
+                break
+
+    if len(meal) < k:
+        print(-1)
+    else:
+        print(sum_val)

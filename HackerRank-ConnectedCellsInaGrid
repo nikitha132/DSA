@@ -1,0 +1,19 @@
+def connectedCell(matrix):
+    # Write your code here
+    def dfs(i, j):
+        if i < 0 or i >= len(matrix) or j < 0 or j >= len(matrix[0]) or matrix[i][j] == 0:
+            return 0
+        matrix[i][j] = 0 
+        size = 1
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                if dx != 0 or dy != 0:
+                    size += dfs(i + dx, j + dy)
+        return size
+    max_size = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1:
+                region_size = dfs(i, j)
+                max_size = max(max_size, region_size)
+    return max_size
