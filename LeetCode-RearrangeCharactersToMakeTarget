@@ -1,0 +1,19 @@
+class Solution:
+    def rearrangeCharacters(self, s: str, target: str) -> int:
+        char_freq={}
+        target_freq={}
+        for char in target:
+            target_freq[char]=target_freq.get(char, 0) + 1
+        for char in s:
+            if char in target:
+                char_freq[char] = char_freq.get(char, 0) + 1
+
+        Min=math.inf
+        for char in target:
+            if char in char_freq:
+                Min=min(Min,floor(char_freq[char]/target_freq[char]))
+            else:
+                return 0
+        return Min
+
+        

@@ -1,0 +1,40 @@
+class ExamRoom:
+
+    def __init__(self, n: int):
+        self.n = n
+        self.students = []
+        
+    def seat(self) -> int:
+        if not self.students:
+            seat = 0
+            self.students.append(seat)
+        else:
+            max_dist=self.students[0]
+            seat=0
+            prev_seat=None
+            for i in range(1,len(self.students)):
+                dist=(self.students[i]-self.students[i-1])//2
+                if dist>max_dist:
+                    max_dist=dist
+                    prev_seat=self.students[i-1]
+                    seat=prev_seat+dist
+            if self.n-1-self.students[-1]>max_dist:
+                seat=self.n-1
+                prev_seat=self.students[-1]
+                
+            if prev_seat is not None:
+                self.students.insert(self.students.index(prev_seat)+1,seat)
+            else:
+                self.students.append(seat)
+                self.students.sort()
+  
+        return seat
+
+    def leave(self, p: int) -> None:
+        self.students.remove(p)
+
+
+# Your ExamRoom object will be instantiated and called as such:
+# obj = ExamRoom(n)
+# param_1 = obj.seat()
+# obj.leave(p)

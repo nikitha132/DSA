@@ -1,0 +1,11 @@
+class Solution:
+    def minimumSum(self, num: int) -> int:
+        numbers=list(map(int,str(num).strip()))
+        numbers.sort()
+        # for i in range(len(numbers)-1):
+        #     for j in range(len(numbers)-i-1):
+        #         if(numbers[j]>numbers[j+1]):
+        #             numbers[j],numbers[j+1]=numbers[j+1],numbers[j]
+
+        return int(str(numbers[0])+str(numbers[2]))+int(str(numbers[1])+str(numbers[3]))
+        

@@ -1,0 +1,25 @@
+class MyCalendar:
+
+    def __init__(self):
+        self.intervals=[]
+
+    def book(self, start: int, end: int) -> bool:
+        new_interval = [start, end]
+        i=0
+        while i < len(self.intervals) and self.intervals[i][1] <= start:
+            i += 1
+        
+        if i > 0 and new_interval[0] < self.intervals[i - 1][1]:
+            return False
+        
+        if i < len(self.intervals) and new_interval[1] > self.intervals[i][0]:
+            return False
+        
+        self.intervals.insert(i, new_interval)
+        return True
+        
+
+
+# Your MyCalendar object will be instantiated and called as such:
+# obj = MyCalendar()
+# param_1 = obj.book(start,end)
