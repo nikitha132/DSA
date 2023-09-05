@@ -1,0 +1,62 @@
+# find hieght using Recursion
+# find corners, breadth of the Tree
+# print the level order of tree
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+def hieght(root):
+    if root:
+        return (1+max(hieght(root.left),hieght(root.right)))
+    else:
+        return 0
+def levelOrder(root):
+    if not root:
+        return []
+    leafSum=0
+    result = []
+    corners=[]
+    breadth=0
+    queue = [root]
+
+    while queue:
+        level = []
+        next_level = []
+
+        for node in queue:
+            level.append(node.val)
+            if node.left:
+                next_level.append(node.left)
+            if node.right:
+                next_level.append(node.right)
+            if not node.left and  not node.right:
+                leafSum+=node.val
+                
+        if next_level:
+            breadth += 1
+        result.append(level)
+        if len(level)>1:
+            corners.append(level[0])
+        corners.append(level[-1])
+        queue = next_level
+    print(leafSum)
+    return result,corners,breadth
+# Define the TreeNode class and levelOrder function (already provided)
+
+# Create the binary tree
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+root.right.left = TreeNode(6)
+root.right.right = TreeNode(7)
+
+# Perform level order traversal
+result,corners,breadth = levelOrder(root)
+height=hieght(root)
+# Print the result
+for level in result:
+    print(level)
+print(corners,breadth,height)
