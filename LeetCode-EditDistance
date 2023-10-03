@@ -1,0 +1,47 @@
+#without dp only recursion
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        def lcs(s1,s2,m,n):
+            if n==0:
+                return m
+            if m==0:
+                return n
+            if (s1[m-1]==s2[n-1]):
+                return lcs(s1,s2,m-1,n-1)
+            else:
+                return 1+min(lcs(s1,s2,m-1,n),lcs(s1,s2,m,n-1),lcs(s1,s2,m-1,n-1))
+        m=len(word1)
+        n=len(word2)
+        return lcs(word1,word2,m,n)
+        
+#optimized with memoization--------------------------------------------------------------
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        def editDistance(s1, s2, m, n, memo):
+            # Check if the result is already memoized
+            if memo[m][n] != -1:
+                return memo[m][n]
+            
+            # Base cases
+            if n == 0:
+                memo[m][n] = m
+            elif m == 0:
+                memo[m][n] = n
+            elif s1[m - 1] == s2[n - 1]:
+                memo[m][n] = editDistance(s1, s2, m - 1, n - 1, memo)
+            else:
+                insert = editDistance(s1, s2, m, n - 1, memo)
+                delete = editDistance(s1, s2, m - 1, n, memo)
+                replace = editDistance(s1, s2, m - 1, n - 1, memo)
+                memo[m][n] = 1 + min(insert, delete, replace)
+            
+            return memo[m][n]
+        
+        m = len(word1)
+        n = len(word2)
+        
+        # Initialize the memoization table with -1
+        memo = [[-1] * (n + 1) for _ in range(m + 1)]
+        
+        return editDistance(word1, word2, m, n, memo)
+         

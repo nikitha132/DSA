@@ -1,0 +1,89 @@
+#with recursion
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total_sum = sum(nums)
+        if total_sum % 2 != 0:
+            return False
+        
+        target_sum = total_sum // 2
+        n = len(nums)
+        
+        def isSubsetSum(nums, n, target_sum):
+            if target_sum == 0:
+                return True
+            if n == 0 and target_sum != 0:
+                return False
+
+            if nums[n - 1] > target_sum:
+                return isSubsetSum(nums, n - 1, target_sum)
+
+            return isSubsetSum(nums, n - 1, target_sum) or isSubsetSum(nums, n - 1, target_sum - nums[n - 1])
+        
+        return isSubsetSum(nums, n, target_sum)
+#memoized
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total_sum = sum(nums)
+        if total_sum % 2 != 0:
+            return False
+        
+        target_sum = total_sum // 2
+        n = len(nums)
+        
+        def isSubsetSum(nums, n, target_sum,memo):
+            if target_sum == 0:
+                return True
+            if n == 0 and target_sum != 0:
+                return False
+            if memo[n][target_sum] != -1:
+                return memo[n][target_sum]
+
+            if nums[n - 1] > target_sum:
+                memo[n][target_sum]=isSubsetSum(nums, n - 1, target_sum,memo)
+            else:
+                memo[n][target_sum]=isSubsetSum(nums, n - 1, target_sum,memo) or isSubsetSum(nums, n - 1, target_sum - nums[n - 1],memo)
+            return memo[n][target_sum]
+        
+        memo = [[-1 for _ in range(target_sum + 1)] for _ in range(len(nums) + 1)]
+        return isSubsetSum(nums, n, target_sum,memo)
+#with dp
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total_sum = sum(nums)
+        if total_sum % 2 != 0:
+            return False
+        
+        target_sum = total_sum // 2
+        n = len(nums)
+        
+        dp = [[False] * (target_sum + 1) for _ in range(n + 1)]
+        for i in range(n + 1):
+            dp[i][0] = True
+
+        for i in range(1, n + 1):
+            for j in range(1, target_sum + 1):
+                if nums[i - 1] <= j:
+                    dp[i][j] = dp[i - 1][j] or dp[i - 1][j - nums[i - 1]]
+                else:
+                    dp[i][j] = dp[i - 1][j]
+        
+        return dp[n][target_sum]
+#optimized
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total_sum = sum(nums)
+        if total_sum % 2 != 0:
+            return False
+        
+        target_sum = total_sum // 2
+        n = len(nums)
+        
+        dp = [False] * (target_sum + 1)
+        dp[0] = True
+    
+        for num in nums:
+            for j in range(target_sum, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
+        
+        return dp[target_sum]        
+        

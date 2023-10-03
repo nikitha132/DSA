@@ -1,0 +1,33 @@
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        def isValid(board,row,col):
+            for i in range(row):
+                #same column
+                if board[i][col]=="Q":
+                    return False
+                #left diagonal
+                if (col-(row-i))>=0 and board[i][col-(row-i)]=="Q":
+                    return False
+                #right diagonal
+                if (col+(row-i))<n and board[i][col+(row-i)]=="Q":
+                    return False
+            return True
+        def backtrack(board,nq):
+            if nq==n:
+                solutions.append(["".join(row) for row in board])
+                return
+            for col in range(n):
+                if isValid(board,nq,col):
+                    board[nq][col]="Q"
+                    backtrack(board,nq+1)
+                    board[nq][col]="."
+        solutions=[]
+        empty_board=[["." for _ in range(n)] for _ in range(n)]
+        backtrack(empty_board,0)
+        return solutions
+
+                    
+
+
+                
+                
