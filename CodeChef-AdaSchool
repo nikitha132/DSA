@@ -1,0 +1,29 @@
+'''Ada's classroom contains NXM tables distributed in a grid with N rows and M columns.
+Each table is occupied by exactly one student.Before starting the class, 
+the teacher decided to shuffle the students a bit. After the shuffling, 
+each table should be occupied by exactly one student again. In addition, 
+each student should occupy a table that is adjacent to that student's original table, 
+i.e. immediately to the left, right, top or bottom of that table.
+Is it possible for the students to shuffle while satisfying all conditions of the teacher?
+Soln:
+Observation 1:
+Imagine that there are 6 columns. We aren’t focusing on rows now. There can be any
+number of rows. In this case, we can swap entire column 1 with column 2, at every row. Similarly, we can
+swap entire column 3 with column 4 and column 5 with column 6. Notice that no
+element is at its original position. So, if the number of columns is
+even – we are done!
+But if the number of columns is odd? We now try to do same
+thing with rows. Check if the number of rows is even. If yes, then we are done again.
+.So, if the number of rows is even, we are done again!
+This clearly means that there is no issue if both of them are even. The problem comes when both of them are odd.
+After noting few examples on paper, you can realize that – it is not possible to shuffle
+all the students if the number of rows, as well as columns, are odd. There will be one
+and only one element, who will not be able to swap its position in this case.'''
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N,M=list(map(int,input().split()))
+    if N%2==0 or M%2==0:
+        print("YES")
+    else:
+        print("NO")

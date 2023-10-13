@@ -1,0 +1,21 @@
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N=int(input())
+    ingred_mix={
+        'c': 0,
+        'o': 0,
+        'd': 0,
+        'e': 0,
+        'h': 0,
+        'f': 0
+    }
+    for _ in range(N):
+        ingred=input()
+        for char in ingred:
+            if char in ['c','o','d','e','h','f']:
+                ingred_mix[char]+=1
+    a=min (ingred_mix['o'],ingred_mix['d'],ingred_mix['h'],ingred_mix['f'])
+    b=min(ingred_mix['c'],ingred_mix['e'])
+    print(min(b//2,a))
+

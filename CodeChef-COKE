@@ -1,0 +1,31 @@
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N,M,K,L,R=list(map(int,input().split()))
+    prices=[]
+    for i in range(N):
+        temperature,price=list(map(int,input().split()))
+        time = 0
+        while time < M:
+            if temperature > K + 1:
+                temperature -= 1
+                time += 1
+            elif temperature < K - 1:
+                temperature += 1
+                time += 1
+            else:
+                temperature = K
+                time += 1
+        if temperature in range(L,R+1):
+            prices.append(price)
+    prices.sort()
+    
+    if prices:
+        print(prices[0])
+    else:
+        print(-1)
+        
+    
+            
+        
+        

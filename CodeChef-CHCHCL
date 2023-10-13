@@ -1,0 +1,16 @@
+'''Two players are breaking a chocolate bar of N x M size into pieces. A player’s turn
+consists of choosing one piece and breaking it in two. A player who is unable to break
+the chocolate further loses. Which player wins the game?
+Explanation:
+This is a very easy problem. We know that the chocolate can be broken into N x M
+pieces at max. Once we have N x M chocolate pieces of size 1 x 1, the next player
+loses. So, the outcome of the game depends on who makes the N*Mth move. If N*M is
+odd, the first player to make the move loses; otherwise, if N*M is even, the second
+player loses.So, the logic is – just check if a number is even or odd!'''
+t = int(input())
+for _ in range(t):
+    n, m = map(int, input().split())
+    if (n*m)%2 == 0:
+        print("Yes")
+    else:
+        print("No")

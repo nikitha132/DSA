@@ -1,0 +1,13 @@
+'''perspective of proof his from point of view of second candidate. In first
+minute, the first candidate has filled all boxes with 1 apple. Now, the final
+configuration can only be same iff the second candidate also fills all the boxes - else
+it’s obvious that final configuration is different. This is possible only if t is a multiple
+of K.'''
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N,K=list(map(int,input().split()))
+    if (N//K)%K==0:
+        print("NO")
+    else:
+        print("YES")

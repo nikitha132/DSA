@@ -1,0 +1,33 @@
+import sys
+sys.setrecursionlimit(10**8)
+def journeyToMoon (n, astronaut): 
+    # create adjacency list for graph edges in range(n)
+    graph =[[] for i in range(n)]
+    for x, y in astronaut:
+        graph[x].append(y)
+        graph[y].append(x)
+    visited = [False] * n 
+    # calculate total pairs(combinations)
+    pairs = n * (n-1) // 2
+    # create dfs function
+    # to find no. of persons in one country(disjoint graph) 
+    def dfs(u, graph, visited):
+        visited [u] = True
+        vertices = 1
+        for v in graph[u]: 
+            if visited[v] == False:
+                vertices += dfs(v, graph, visited)
+        return vertices
+        
+    for v in range(n):
+        if visited[v] == False:
+            n_persons=dfs(v, graph, visited) 
+            # remove Combinations from same country(self-combinations)
+            pairs -= n_persons*(n_persons-1) // 2
+    
+    return pairs
+n = 5
+astronaut = [(0, 1), (2, 3), (0, 4)]
+
+# Sample Output
+print(journeyToMoon(n, astronaut))  # Output: 6

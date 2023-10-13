@@ -1,0 +1,39 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+#performing an in-order traversal and keeping track of the previous visited node 
+# to ensure that each node's value is greater than the previous node's value.
+# i.e left<root<right
+def checkBST(root, prev=[None],st="root"):
+    if root is None:
+        return True
+
+    # Recursively check the left subtree.
+    if not checkBST(root.left, prev,"left"):
+        return False
+
+    # Check if the current node's value is greater than the previous node's value.
+    if prev[0] is not None and root.data <= prev[0].data:
+        return False
+
+    # Update the previous node for the next iteration.
+    prev[0] = root
+
+    # Recursively check the right subtree.
+    return checkBST(root.right, prev,"right")
+
+# Example usage:
+root = Node(10)
+root.left = Node(5)
+root.right = Node(15)
+root.left.left = Node(3)
+root.left.right = Node(7)
+root.right.left = Node(12)
+root.right.right = Node(18)
+
+if checkBST(root):
+    print("Yes")
+else:
+    print("No")

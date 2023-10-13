@@ -1,0 +1,58 @@
+#for creating a new node
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+        self.count = 0
+        
+#for adding and finding contacts in a Trie
+class Contacts:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def add_contact(self, name):
+        node = self.root
+        for char in name:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+            node.count += 1
+        node.is_end_of_word = True
+
+    def find_partial(self, partial):
+        node = self.root
+        for char in partial:
+            if char not in node.children:
+                return 0
+            node = node.children[char]
+        return node.count
+
+def contacts(queries):
+    result = []
+    contacts_app = Contacts()
+
+    for query in queries:
+        operation, arg = query.split()
+        if operation == 'add':
+            contacts_app.add_contact(arg)
+        elif operation == 'find':
+            result.append(contacts_app.find_partial(arg))
+
+    return result
+
+# Sample Input
+queries = ['add hack', 'add hackerrank', 'add apple','add app', 'find hac', 'find hak']
+#Trie.children will look like
+#{h:{a:{c:{k:{e{r:{r:{a:{n:{k}}}}}}}}}},{a:{p:{p:{l:{e}}}}}
+#Trie.children[char].count will be
+#h-2,a-2,c-2,k-2,e-1,r-1,r-1,a-1,n-1,k-1 |a-2,p-2,p-2,l-1,e-1
+#Trie logically will look like
+#       2
+#    /     \
+#  h,2,f   a,2,f
+# /         \
+# a,2,f     p,2,f....
+# Sample Output
+output = contacts(queries)
+for count in output:
+    print(count)

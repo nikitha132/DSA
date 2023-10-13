@@ -1,0 +1,12 @@
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N,Q=list(map(int,input().split()))
+    Sum,curr=0,0
+    for _ in range(Q):
+        src,dest=list(map(int,input().split()))
+        Sum+=abs(src-curr)+abs(dest-src)
+        curr=dest
+    print(Sum)
+        
+        

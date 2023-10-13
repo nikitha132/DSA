@@ -1,0 +1,47 @@
+'''
+ _______________________
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+|__|__|__|__|__|__|__|__|
+N=8
+max_len=7     4 squares
+next_odd= 5   16 squares
+next_odd= 3   36 squares
+next_odd= 1   64 squares
+'''
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N=int(input())
+    max_odd=N
+    if N%2==0:
+        max_odd=N-1
+    Total=0
+    while(max_odd>0):
+        count=0
+        for i in range(1,N+1):
+            if i+max_odd>N+1:
+                break
+            count+=1
+        Total+=count*count
+        max_odd-=2
+    print(Total)
+             
+
+# cook your dish here instantly
+t=int(input())
+for _ in range(t):
+    n=int(input())
+    squares = 0;
+    for i in range(1, n+1, 2):
+        size = (n - i) + 1;
+        squares += (size * size);
+    print(squares);
+            
+            
+        

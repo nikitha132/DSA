@@ -1,0 +1,10 @@
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    N,K,V=list(map(int,input().split()))
+    nums=list(map(int,input().split()))
+    deleted_sum=(V*(N+K)-sum(nums))
+    if deleted_sum > 0 and deleted_sum % K == 0:
+        print(deleted_sum // K)
+    else:
+        print(-1)
