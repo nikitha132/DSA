@@ -1,0 +1,36 @@
+class Node:
+    def __init__ (self, info):
+        self.info=info
+        self.left = None
+        self.right=None
+        self. level=None
+
+def preorder (root):
+    if root == None:
+        return
+    print (root.info, end="")
+    preorder(root. left)
+    preorder (root.right)
+
+class BinarySearchTree: 
+    def __init__ (self):
+        self.root = None
+
+    def insert(self, val):
+    #Enter you code here. 
+        def traversal (node, val):
+            if node: 
+                if node.info>val:
+                    node.left=traversal (node.left,val)
+                else:
+                    node.right=traversal (node.right,val)
+                return node
+            return Node(val)
+        self.root=traversal (self.root,val)
+
+tree = BinarySearchTree()
+t = int(input())
+arr = list(map(int, input().split()))
+for i in range(t):
+    tree.insert(arr[i])
+preorder (tree.root)

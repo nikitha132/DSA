@@ -1,0 +1,27 @@
+def roadsAndLibraries(n, c_lib, c_road, cities):
+    # Write your code here
+    graph =[[] for i in range(n+1)]
+    for x, y in cities:
+        graph[x].append(y)
+        graph[y].append(x)
+    visited = [False] * (n+1)
+    total_cost=0
+    # create dfs function
+    # to find no. of cities (disjoint graph) 
+    def dfs(u, graph, visited):
+        visited [u] = True
+        n_cities = 1
+        for v in graph[u]: 
+            if visited[v] == False:
+                n_cities += dfs(v, graph, visited)
+        return n_cities
+        
+    for v in range(1,n+1):
+        if visited[v] == False:
+            n_cities=dfs(v, graph, visited) 
+            #calculate cost of roads and 1 library
+            cost1=(n_cities-1)*c_road + c_lib 
+            #calculate cost of building libraries in all cities 
+            cost2= n_cities*c_lib
+            total_cost+=min(cost1,cost2)
+    return total_cost

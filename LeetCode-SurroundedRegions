@@ -1,0 +1,50 @@
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        The 'O' s on borders form a leak for the 'O's which are surrounded/neighbours to those O's,
+        preventing from forming a region surrounded by 'X's
+        Thus we eliminate all those O's and rest of the 'O's which are
+        not neighbours of the leaking 'O's ,are definintely surrounded by 'X'
+        """
+        r=len(board)
+        c=len(board[0])
+        Q=[]
+        for i in range(r):
+            #first col
+            if board[i][0]=='O':
+                Q.append((i,0))
+            #last col
+            if board[i][c-1]=='O':
+                 Q.append((i,c-1))
+        for j in range(c):
+            #first row
+            if board[0][j]=='O':
+                Q.append((0,j))
+            #last row
+            if board[r-1][j]=='O':
+                 Q.append((r-1,j))
+
+        while Q:
+            i,j=Q.pop(0)
+            board[i][j]='#'
+            for x, y in [(i+1,j),(i-1,j),(i,j+1),(i,j-1)]:
+                if not (0<=x<r and 0<=y<c):
+                    continue
+                if board[x][y]!='O':
+                    continue
+                Q.append((x,y))
+                board[x][y]='#'
+
+        for i in range(r):
+            for j in range(c):
+                if board[i][j]=='O':
+                    board[i][j]='X'
+                elif board[i][j]=='#':
+                    board[i][j]='O'
+
+
+
+        
+        
+
