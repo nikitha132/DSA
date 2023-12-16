@@ -1,4 +1,4 @@
-#without dp only recursion
+#with dp 
 def lcs(s1,s2,m,n,dp):
             if m==0 or n==0:
                 return 0

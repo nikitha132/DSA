@@ -1,0 +1,14 @@
+from collections import deque
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+        Queue=deque([(0,[0])])
+        n=len(graph)-1
+        result=[]
+        while(Queue):
+            v,path=Queue.popleft()
+            for u in graph[v]:
+                Queue.append((u,path+[u]))
+                if u==n:
+                    result.append(path + [u])                              
+        return result
+            

@@ -1,0 +1,28 @@
+'''
+ Turan's theorem gives us an upper bound on the number of edges a graph can have 
+ if we wish that it should not have a clique of size x . 
+ Though the bound is not exact, it is easy to extend the statement of the theorem 
+ to get an exact bound in terms of n and x. 
+ Once this is done, we can binary search for the largest x such that f(n,x)<=m 
+ Now, let's go through the formula step by step:
+1. (n ** 2): This represents the total number of edges in a complete graph (every node is connected to every other node).
+2. (n % k): This represents the remainder when we divide the total number of nodes n by the size of the clique we want to find k.
+3. (math.ceil(n / k)) ** 2: This calculates the number of edges within each group if we distribute the nodes as evenly as possible.
+4. (k - (n % k)): This is the number of groups that will have one fewer node to ensure even distribution.
+5. ((n // k) ** 2): This calculates the number of edges within each of the groups with one fewer node.
+6. - (n % k) * ((math.ceil(n / k)) ** 2) - (k - (n % k)) * ((n // k) ** 2): This part of the formula calculates how many edges we should subtract to account for the uneven distribution of nodes.
+7. // 2: Finally, we divide the entire expression by 2 because each edge is counted twice in the total count, so we need to divide by 2 to get the actual number of edges.'''
+def clique(n, m):
+    low = 1
+    high = n
+    while low < high:
+        mid = (low + high+1) // 2
+        tedges = int(turan(n, mid))
+        if tedges < m:
+            low = mid
+        else:
+            high = mid-1
+    return high+1
+
+def turan(n, k):
+    return (n ** 2 - (n % k) * ((math.ceil(n / k)) ** 2) - (k - (n % k)) * ((n // k) ** 2)) // 2

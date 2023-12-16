@@ -1,0 +1,17 @@
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    A,B=list(map(int,input().split()))
+    rounds_limak = 0
+    #sum of odd numbers=n^2
+    while rounds_limak * (rounds_limak ) <= A:
+        rounds_limak += 1
+        
+    rounds_bob = 0
+    #sum of even numbers=n*(n+1)
+    while rounds_bob * (rounds_bob + 1) <= B:
+        rounds_bob += 1
+    if rounds_limak > rounds_bob:
+        print("Limak")
+    else:
+        print("Bob")

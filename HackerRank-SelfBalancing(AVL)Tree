@@ -1,0 +1,121 @@
+# Define a class for AVL nodes
+class AVLNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+        self.height = 1  # Initialize the height of the node to 1
+
+# Define a class for the AVL tree
+class AVLTree:
+    # Function to insert a new value into the AVL tree
+    def insert(self, root, new_val):
+        # If the root is None, create a new node with the new value
+        if not root:
+            return AVLNode(new_val)
+
+        # Determine whether to insert the new value in the left or right subtree
+        if new_val < root.val:
+            root.left = self.insert(root.left, new_val)
+        else:
+            root.right = self.insert(root.right, new_val)
+
+        # Update the height of the current node based on the maximum height of its children
+        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+
+        # Calculate the balance factor of the current node
+        balance = self.get_balance(root)
+
+        # Perform rotations to balance the tree if necessary
+        if balance > 1 and new_val < root.left.val:
+            return self.right_rotate(root)
+
+        if balance < -1 and new_val > root.right.val:
+            return self.left_rotate(root)
+
+        if balance > 1 and new_val > root.left.val:
+            root.left = self.left_rotate(root.left)
+            return self.right_rotate(root)
+
+        if balance < -1 and new_val < root.right.val:
+            root.right = self.right_rotate(root.right)
+            return self.left_rotate(root)
+
+        # Return the modified node
+        return root
+
+    # Function to perform a right rotation
+    def right_rotate(self, y):
+        x = y.left
+        T2 = x.right
+
+        x.right = y
+        y.left = T2
+
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+
+        return x
+
+    # Function to perform a left rotation
+    def left_rotate(self, x):
+        y = x.right
+        T2 = y.left
+
+        y.left = x
+        x.right = T2
+
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+
+        return y
+
+    # Function to get the height of a node (or subtree)
+    def get_height(self, root):
+        if not root:
+            return 0
+        return root.height
+
+    # Function to get the balance factor of a node
+    def get_balance(self, root):
+        if not root:
+            return 0
+        return self.get_height(root.left) - self.get_height(root.right)
+
+    # Wrapper function for inserting a new key into the AVL tree
+    def insert_key(self, root, new_val):
+        return self.insert(root, new_val)
+
+    # Function to perform an in-order traversal and display balance factors
+    def inorder_traversal(self, root):
+        if root:
+            self.inorder_traversal(root.left)
+            balance_factor = self.get_balance(root)
+            print(f"{root.val}(BF={balance_factor})", end=" ")
+            self.inorder_traversal(root.right)
+
+    # Function to perform a pre-order traversal and display balance factors
+    def preOrderTraversal(self, root):
+        if root:
+            balance_factor = self.get_balance(root)
+            print(f"{root.val}(BF={balance_factor})", end=" ")
+            self.preOrderTraversal(root.left)
+            self.preOrderTraversal(root.right)
+
+if __name__ == "__main__":
+    avl_tree = AVLTree()
+    root = None
+
+    n = int(input())  # Number of elements in the AVL tree
+    elements = list(map(int, input().split()))  # Elements to insert into the AVL tree
+    q = int(input())  # New element to insert into the AVL tree
+
+    # Insert the given elements into the AVL tree
+    for element in elements:
+        root = avl_tree.insert_key(root, element)
+
+    # Insert the new element and display balance factors using in-order and pre-order traversals
+    root = avl_tree.insert_key(root, q)
+    avl_tree.inorder_traversal(root)
+    print()
+    avl_tree.preOrderTraversal(root)

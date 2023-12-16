@@ -1,0 +1,28 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = defaultdict(list)
+        visited = [0] * numCourses
+
+        for course, pre in prerequisites:
+            graph[pre].append(course)
+
+        def dfs(course):
+            if visited[course] == -1:  # Detected a cycle
+                return False
+            if visited[course] == 1:
+                return True
+
+            visited[course] = -1  # Mark as visited
+
+            for neighbor in graph[course]:
+                if not dfs(neighbor):
+                    return False
+
+            visited[course] = 1  # Mark as processed
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+
+        return True

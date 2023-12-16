@@ -1,0 +1,24 @@
+'''
+You are given an array of people, people , which are the attributes of some people in a queue (not necessarily in order). Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+
+Reconstruct and print the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+
+####Input Format: *first line contains sinlgle integer n (length of the array) *next n lines contains 2 single separated integers\
+
+####Output Format: *n lines each contains single space separated 2 integers
+
+####Constraints: 1 <= people.length <= 2000 0 <= hi <= 10^6 0 <= ki < people.length It is guaranteed that the queue can be reconstructed.
+
+####Example: Input: 6 7 0 4 4 7 1 5 0 6 1 5 2 Output: 5 0 7 0 5 2 6 1 4 4 7 1
+'''
+class Solution:
+    def queueReconstruction(self,people):
+        # Sort the people array
+        people.sort(key=lambda x: (-x[0], x[1]))
+
+        # Reconstruct the queue
+        queue = []
+        for person in people:
+            h, k = person
+            queue.insert(k, [h, k])
+        return queue

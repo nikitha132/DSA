@@ -1,0 +1,42 @@
+#Recursion
+# class Solution:
+    # def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+    #     def dfs(i, j, old_color):
+    #         if (0 <= i < len(image)) and (0 <= j < len(image[0])) and image[i][j] == old_color and image[i][j]!=color:
+    #             image[i][j] = color  # Mark the cell as visited
+    #             # Explore neighbors (up, down, left, right)
+    #             dfs(i - 1, j, old_color)  # Up
+    #             dfs(i + 1, j, old_color)  # Down
+    #             dfs(i, j - 1, old_color)  # Left
+    #             dfs(i, j + 1, old_color)  # Right
+
+        
+    #     old_color = image[sr][sc]
+    #     if old_color != color:  # Check if the color is already the target color
+    #         dfs(sr, sc, old_color)
+
+    #     return image
+
+#iterative with stack
+from collections import deque
+from typing import List
+
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+        if not image or image[sr][sc] == color:
+            return image
+
+        rows, cols = len(image), len(image[0])
+        old_color = image[sr][sc]
+
+        stack = deque([(sr, sc)])
+
+        while stack:
+            i, j = stack.pop()
+            if 0 <= i < rows and 0 <= j < cols and image[i][j] == old_color and image[i][j] != color:
+                image[i][j] = color
+                stack.extend([(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)])
+
+        return image
+
+        

@@ -1,0 +1,22 @@
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n=len(isConnected)
+        visited = [False] * (n) 
+        # create dfs function
+        # to find no. of provinces(disjoint graph) 
+        def dfs(u, isConnected, visited):
+            visited [u] = True
+            for v in range(len(isConnected[u])): 
+                if visited[v] == False and isConnected[u][v]==1:
+                   dfs(v, isConnected, visited)
+            
+        n_provinces=0   
+        for v in range(n):
+            if visited[v] == False:
+                n_provinces+=1
+                dfs(v, isConnected, visited) 
+                
+        return n_provinces
+        
+        
+        

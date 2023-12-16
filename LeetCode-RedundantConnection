@@ -1,0 +1,23 @@
+class Solution:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        def find(parent,node):
+            if parent[node]==node:
+                return node
+            return find(parent,parent[node])
+            
+        def union(x_root,y_root,parent):
+            parent[find(parent,x_root)] = find(parent,y_root)
+
+        parent=[ i for i in range(len(edges)+1)]
+        for u,v in edges:
+            u_root=find(parent,u)
+            v_root=find(parent,v)
+            if u_root!=v_root:
+                union(u_root,v_root,parent)
+            else:
+                return [u,v]
+            
+
+
+
+                   

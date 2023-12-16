@@ -1,0 +1,11 @@
+class Solution:
+    def maximumXOR(self, nums):
+        cnt = [0] * 28
+        maxXor = 0            
+        for i in range(28):
+            for num in nums:
+                if (num & (1 << i)) > 0:
+                    cnt[i] += 1
+            if cnt[i] > 0:        
+                maxXor |= (1 << i)
+        return maxXor

@@ -1,0 +1,19 @@
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        #with dp o(n^2)
+        # n=len(nums)
+        # lis_dp=[1]*(n)
+        # for i in range(n-1,-1,-1):
+        #     for j in range(i+1,n):
+        #         if nums[i]<nums[j]:
+        #             lis_dp[i]=max(lis_dp[i],1+lis_dp[j])
+        # return max(lis_dp)
+        #with binary search o(nlogn)
+        tmp=[]
+        for ele in nums:
+            x=bisect_left(tmp,ele)
+            if x==len(tmp):
+                tmp.append(ele)
+            elif tmp[x]>ele:
+                tmp[x]=ele
+        return len(tmp)

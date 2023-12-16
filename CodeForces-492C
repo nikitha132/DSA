@@ -1,0 +1,28 @@
+class Solution:
+    def solve(self, students, r,avg):
+        n=len(students)
+        goal = avg * n
+        
+        total = 0
+        for i in range(n):
+          total += students[i][0]
+        
+        if total >= goal:
+          print(0)
+        else:
+          students.sort(key=lambda x: x[1])
+          ans = 0   
+          for student in students:
+            avail = r - student[0]
+            if avail > 0:
+              if avail > goal - total:
+                ans += (goal-total) * student[1]
+                break
+              else:
+                ans += avail * student[1]
+                total += avail
+          print(ans)
+
+
+
+

@@ -1,0 +1,35 @@
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+        self.strSumDict = {}
+class MapSum:
+
+    def __init__(self):
+        self.root = TrieNode()
+        
+
+    def insert(self, key: str, val: int) -> None:
+        node = self.root
+        for char in key:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char] 
+            node.strSumDict[key]=val    
+        node.is_end_of_word = True
+        
+
+    def sum(self, prefix: str) -> int:
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return 0
+            node = node.children[char]
+        return sum(node.strSumDict.values())
+        
+
+
+# Your MapSum object will be instantiated and called as such:
+# obj = MapSum()
+# obj.insert(key,val)
+# param_2 = obj.sum(prefix)

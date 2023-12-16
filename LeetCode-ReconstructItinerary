@@ -1,0 +1,15 @@
+import heapq
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph =defaultdict(list)
+        for x, y in sorted(tickets,reverse=True):
+            graph[x].append(y)
+        result=[]
+        def dfs(u):
+            while graph[u]:
+                dfs(graph[u].pop())
+            result.append(u) 
+        dfs("JFK")
+        return result[::-1]
+           
+        

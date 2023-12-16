@@ -1,0 +1,21 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        def dfs(i, j):
+            if (0 <= i < len(grid)) and (0 <= j < len(grid[0]) and grid[i][j] == '1'):
+                grid[i][j] = '0'  # Mark the cell as visited
+
+                # Explore neighbors (up, down, left, right)
+                dfs(i - 1, j)  # Up
+                dfs(i + 1, j)  # Down
+                dfs(i, j - 1)  # Left
+                dfs(i, j + 1)  # Right
+
+        region_count = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == '1':
+                    region_count += 1
+                    dfs(i, j)  # Start a new DFS from this '1'
+
+        return region_count
+            
