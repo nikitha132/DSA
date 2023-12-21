@@ -1,0 +1,81 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'shortestReach' function below.
+#
+# The function is expected to return an INTEGER_ARRAY.
+# The function accepts following parameters:
+#  1. INTEGER n
+#  2. 2D_INTEGER_ARRAY edges
+#  3. INTEGER s
+#
+import heapq
+from collections import defaultdict
+def shortestReach(n, edges, s):
+    # Write your code here
+    graph=defaultdict(list)
+    for (u,v),w in edges.items():
+        graph[u].append((v,w))
+        graph[v].append((u,w))
+    distance=[sys.maxsize]*(n+1)
+    visited=[False]*(n+1)
+    distance[s]=0
+    minHeap=[]
+    heapq.heappush(minHeap,(distance[s],s))
+    while minHeap:
+        d,u=heapq.heappop(minHeap)
+        if visited[u]==False:
+            visited[u]=True
+            for v,w in graph[u]:
+                if visited[v]==False and distance[v]>distance[u]+w:
+                   distance[v]=distance[u]+w
+                   heapq.heappush(minHeap,(distance[v],v))
+    del distance[s]             
+    del distance[0]
+    for i in range(len(distance)):
+        if distance[i]==sys.maxsize:
+            distance[i]=-1
+    return distance
+            
+        
+    
+        
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())
+
+    for t_itr in range(t):
+        first_multiple_input = input().rstrip().split()
+
+        n = int(first_multiple_input[0])
+
+        m = int(first_multiple_input[1])
+
+        edges = dict()
+
+        for _ in range(m):
+            u,v,w=map(int, input().rstrip().split())
+            if (u,v) in edges:
+                edges[(u,v)]=min(edges[(u,v)],w)
+            elif (v,u) in edges:
+                edges[(v,u)]=min(edges[(v,u)],w)
+            else:
+                edges[(u,v)]=w
+                
+
+        s = int(input().strip())
+
+        result = shortestReach(n, edges, s)
+
+        fptr.write(' '.join(map(str, result)))
+        fptr.write('\n')
+
+    fptr.close()

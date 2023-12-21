@@ -1,32 +1,24 @@
 '''
-Scientists want to select the best site to build their new space observatory. The best site is defined as the city with the least ambient light from surrounding cities.
+Scientists want to select the best site to build their new space observatory. 
+The best site is defined as the city with the least ambient light from surrounding cities.
 
-There are n
- cities numbered from 1
- to n
-. The cities are connected by bidirectional edges to form a connected graph. The weight of each edge represents the distance between the cities. There is a distance threshold k
- that represents the minimum desired distance from any other city. Determine the city with the smallest number of neighboring cities that are nearer than the distance k
-. If there are multiple answers, choose the higher city.
+There are n cities numbered from 1 to n. 
+The cities are connected by bidirectional edges to form a connected graph. 
+The weight of each edge represents the distance between the cities. 
+There is a distance threshold k that represents the minimum desired distance from any other city. 
+Determine the city with the smallest number of neighboring cities that are nearer than the distance k.
+If there are multiple answers, choose the higher city.
 
 Input
-The first line of input consists of 3 space separated integers n
- −
- the number of cities, m
- −
- the number of edges and k
- −
- the distance threshold. The next m
- lines each consist of 3 space separated integers u
-, v
- and w
- which denotes that there is an edge between u
- and v
- of weight w
-.
+The first line of input consists of 3 space separated integers 
+n − the number of cities, 
+m − the number of edges and 
+k − the distance threshold. 
+The next m lines each consist of 3 space separated integers u, v and w
+which denotes that there is an edge between u and v of weight w.
 
 Output
-The output should consist of a single integer −
- the number of the best telescope site.
+The output should consist of a single integer − the number of the best telescope site.
 
 Examples
 input
@@ -47,7 +39,7 @@ output
 5'''
 import heapq
 def dijk(node, k ):
-  dist = [999999999999]*(n+1)
+  dist = [999999999999]*(city_nodes+1)
   dist[node] = 0
   q = [(0,node)]
   heapq.heapify(q)
@@ -58,23 +50,23 @@ def dijk(node, k ):
         dist[neigh] = val+w 
         heapq.heappush(q,(dist[neigh],neigh))
   count = 0
-  for i in range(1,n+1):
+  for i in range(1,city_nodes+1):
     if(dist[i]<=k):
       count+=1
   ans.append((count,node))
   
 city_nodes,city_edges,distanceThreshold = list(map(int,input().split()))
 adj = dict()
-for i in range(n+1):
+for i in range(city_nodes+1):
   adj[i] = []
 
-for i in range(m):
+for i in range(city_edges):
   u,v,w = list(map(int,input().split()))
   adj[u].append([v,w])
   adj[v].append([u,w])
 
 ans = []
-for i in range(1,n+1):
-  dijk(i,k)
+for i in range(1,city_nodes+1):
+  dijk(i,distanceThreshold)
 ans = sorted(ans, key= lambda x: (x[0],-1*x[1]))
 print(ans[0][1])

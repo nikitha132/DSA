@@ -1,0 +1,64 @@
+'''
+Problem
+A compliance system monitors incoming and outbound calls. It sends an alert whenever the average number of calls over a trailing number of minutes exceeds a threshold. 
+If the number of trailing minutes to consider, precedingMinutes = 5, at time T, take the average the call volumes for times T-(5-1), T-(5-2) ... T-(5-5).
+Example
+n = 8
+numCalls = [2, 2, 2, 2, 5, 5, 5, 8]
+alertThreshold = 4
+precedingMinutes = 3
+No alerts are sent until at least T = 3 because there are not enough values to consider. 
+When T = 3, the average calls = (2 + 2 + 2) / 3= 2. 
+Additionally, average calls from T = 3 to T = 8 are 2, 2, 3, 4, 5, and 6. A total of two alerts are sent during the last two periods.
+Given the data as described, determine the number of alerts sent by the end of the timeframe.
+Function Description
+Complete the numberOfAlerts function in the editor below. It should return an integer that represents the number of alerts sent over the timeframe.
+numberOfAlerts has the following parameter(s):
+int precedingMinutes: the trailing number of minutes to consider
+int alertThreshold: the maximum number of calls allowed before triggering an alert
+int numCalls[n]: numCalls[i] represents the number of calls made during the ith minute
+'''
+def numberOfAlerts(precedingMinutes, alertThreshold, numCalls):
+    # Write your code here
+    alert_count = 0
+
+    if precedingMinutes > len(numCalls):
+        return 0
+
+    window_sum = sum(numCalls[:precedingMinutes])
+
+    for i in range(len(numCalls) - precedingMinutes):
+        avg = window_sum / precedingMinutes
+
+        if avg > alertThreshold:
+            alert_count += 1
+
+        window_sum = window_sum - numCalls[i] + numCalls[i + precedingMinutes]
+
+    avg = window_sum / precedingMinutes
+    if avg > alertThreshold:
+        alert_count += 1
+
+    return alert_count
+
+
+if _name_ == '_main_':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    precedingMinutes = int(input().strip())
+
+    alertThreshold = int(input().strip())
+
+    numCalls_count = int(input().strip())
+
+    numCalls = []
+
+    for _ in range(numCalls_count):
+        numCalls_item = int(input().strip())
+        numCalls.append(numCalls_item)
+
+    result = numberOfAlerts(precedingMinutes, alertThreshold, numCalls)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
