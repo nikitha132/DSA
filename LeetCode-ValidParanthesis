@@ -1,4 +1,5 @@
 class Solution:
+    #keep adding to stack the open brackets and pop if u encouner closed ones
     def isValid(self, s: str) -> bool:
         stk = []
         for ch in s:

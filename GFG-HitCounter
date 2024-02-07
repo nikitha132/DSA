@@ -1,0 +1,105 @@
+#in Java not optimizaed approach
+# import java.lang.Math;
+# class Solution{
+#     int[] times = new int[300];
+#     int[] hits = new int[300];
+    
+#      void hit(int timestamp)
+#         {
+#             // System.out.println("timestamp"+timestamp/60);
+#         	int idx = timestamp % 300;
+#         	if (times[idx] != timestamp) {
+#         		times[idx] = timestamp;
+#         		hits[idx] = 1;
+#         	}
+#         	else {
+#         		++hits[idx];
+#         	}
+#         // 	for (int i = 0; i < 300; ++i) {
+#         // 	    System.out.print(hits[i]+",");
+#         // 	}
+#         // 	System.out.println("----------");
+#         }
+        
+#          int getHits(int timestamp)
+#         {
+#         	int res = 0;
+#         	for (int i = 0; i < 300; ++i) {
+#         		if (timestamp - times[i] < 300) {
+#         			res += hits[i];
+#         		}
+#         	}
+#         	return res;
+#         }
+    
+# }
+
+# class Main {
+#     public static void main(String[] args) {
+#         Solution sol=new Solution();
+#         sol.hit(240);//4 min
+#         sol.hit(120);//2 min
+#         sol.hit(180);//3 min
+#         sol.hit(120);//2 min
+#         sol.hit(300);//5 min
+#         sol.hit(420);//7 min
+#         sol.hit(420);//7 min
+#         sol.hit(120);//2 min
+#         sol.hit(400);//6 min 40 secs
+#         sol.hit(500);//7 min 40 sec
+#         sol.hit(340);//5 min 40 sec
+#         //2  2  3 4 5 5.4  6.4 7 7.4 
+
+#        int k=100;//1 min 40 secs
+#        System.out.println("no of hits 5 mins before "+k/60+":"+sol.getHits(k)+" hits after "+Math.abs((k/60)-5)); 
+       
+#        //5 mins before 12=7 mins
+#        //no of hits after 7 mins=1 hit at 7.4
+
+#     }  
+# }
+
+
+
+from collections import OrderedDict
+
+class HitCounter:
+    def __init__(self):
+        # Use OrderedDict to store hits at different timestamps
+        self.map = OrderedDict()
+
+    def hit(self, timestamp):
+        # Record a hit by updating the OrderedDict
+        self.map[timestamp] = self.map.get(timestamp, 0) + 1
+
+    def getHits(self, timestamp):
+        # Calculate the start timestamp for the past 5 minutes
+        start = timestamp - 300
+        # If the start timestamp is less than 0, set it to 0
+        start = max(0, start)
+
+        # Iterate over items starting from the calculated start timestamp
+        count = 0
+        for key, value in self.map.items():
+            if key < start:
+                # Skip hits outside the 5-minute window
+                continue
+            count += value
+
+        # Return the total number of hits
+        return count
+
+# Example usage
+counter = HitCounter()
+counter.hit(1)
+counter.hit(2)
+counter.hit(3)
+hits1 = counter.getHits(4)  # should return 3
+counter.hit(300)
+hits2 = counter.getHits(300)  # should return 4
+hits3 = counter.getHits(301)  # should return 3
+print(hits1)  # Output: 3
+print(hits2)  # Output: 4
+print(hits3)  # Output: 3
+
+

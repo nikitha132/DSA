@@ -9,6 +9,7 @@ class Node:
 
        // this is a node of the tree , which contains info as data, left , right
 '''
+
 def lca(root, v1, v2):
     #Enter your code here
     if not root:

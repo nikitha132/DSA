@@ -1,0 +1,44 @@
+import bisect
+class Solution:
+    def rooms_req(self, arr, dep, n):
+        # your code here
+        # sort arrival and departure times
+          leaving_times = []
+          rooms = {}
+          ans = [0] * n
+          max_rooms = 0
+          
+          customers = []
+          for i in range(n):
+              customers.append((arr[i], dep[i], i))
+          customers.sort()
+          
+          for a, b, i in customers:
+              if not leaving_times:
+                  leaving_times.append(b)
+                  max_rooms = max(max_rooms, 1)
+                  ans[i] = 1
+                  rooms.setdefault(b, []).append(1)
+                  continue
+          
+              it = bisect.bisect_left(leaving_times, a)
+              if it == 0:
+                  leaving_times.append(b)
+                  max_rooms = max(max_rooms, len(leaving_times))
+          
+                  new_room = len(leaving_times)
+                  rooms.setdefault(b, []).append(new_room)
+                  ans[i] = new_room
+              else:
+                  it -= 1
+                  new_room = rooms[leaving_times[it]].pop()
+          
+                  leaving_times.pop(it)
+                  leaving_times.append(b)
+          
+                  rooms.setdefault(b, []).append(new_room)
+                  ans[i] = new_room
+          
+          return(max_rooms)
+          
+                

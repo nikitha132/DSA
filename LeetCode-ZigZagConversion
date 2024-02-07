@@ -6,6 +6,7 @@ class Solution:
         row, step = 0, 1
         
         for char in s:
+              #traverse left to right keep adding chars to rach row,then right to left
             result[row] += char
             if row == 0:
                 step = 1

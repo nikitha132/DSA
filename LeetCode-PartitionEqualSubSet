@@ -20,6 +20,8 @@ class Solution:
             return isSubsetSum(nums, n - 1, target_sum) or isSubsetSum(nums, n - 1, target_sum - nums[n - 1])
         
         return isSubsetSum(nums, n, target_sum)
+    
+
 #memoized
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
@@ -46,6 +48,7 @@ class Solution:
         
         memo = [[-1 for _ in range(target_sum + 1)] for _ in range(len(nums) + 1)]
         return isSubsetSum(nums, n, target_sum,memo)
+    
 #with dp
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
@@ -68,6 +71,7 @@ class Solution:
                     dp[i][j] = dp[i - 1][j]
         
         return dp[n][target_sum]
+    
 #optimized
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:

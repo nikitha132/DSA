@@ -1,0 +1,36 @@
+'''
+subset1sum+subset2sum=totalsum __eq1
+diff=abs(subset1sum-subset2sum)
+diff=abs(subset1sum-(totalsum-subset1sum))
+    =abs(totalsum-2subset1sum)
+we know subset1sum<=subset2sum
+also since eq1, subset1sum<=totalsum/2 (consider the case if diff<=0)
+so we find only total sum and subset1sum
+'''
+class Solution:
+    def minDifference(self, A):
+      n = len(A)
+      total_sum = sum(A)
+  
+      # Subset Sum Problem
+      dp = [[False for _ in range(total_sum + 1)] for _ in range(n + 1)]
+  
+      for i in range(n + 1):
+          for j in range(total_sum + 1):
+              if j == 0:
+                  dp[i][j] = True  #when the total_sum is supposed to be 0
+              elif i == 0:
+                  dp[i][j] = False #when the array len is 0
+              elif A[i - 1] > j:
+                  dp[i][j] = dp[i - 1][j]  #since curr ele is greater than total_sum,exclude the curr ele at i and take prev val
+              else:
+                  dp[i][j] = dp[i - 1][j] or dp[i - 1][j - A[i - 1]] #exclude or include the current ele
+  
+      diff = float('inf')
+      for i in range(total_sum // 2 + 1):
+          first = i
+          second = total_sum - i
+          if dp[n][i] and diff > abs(first - second):
+              diff = abs(first - second)
+  
+      return diff

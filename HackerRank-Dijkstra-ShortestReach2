@@ -15,6 +15,7 @@ import sys
 #  2. 2D_INTEGER_ARRAY edges
 #  3. INTEGER s
 #
+
 import heapq
 from collections import defaultdict
 def shortestReach(n, edges, s):

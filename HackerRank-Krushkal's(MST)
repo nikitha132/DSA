@@ -21,7 +21,6 @@ import sys
 # 3. An edge exists between <name>_from[i] and <name>_to[i]. The weight of the edge is <name>_weight[i].
 #
 #
-
 def kruskals(g_nodes, g_from, g_to, g_weight):
     # Write your code here
     def find(parent,node):

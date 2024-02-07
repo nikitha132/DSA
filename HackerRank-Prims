@@ -25,6 +25,7 @@ def prims(n, edges, start):
                 min_weight=weights[i]
                 minNode=i
         return minNode
+    
     graph=[[-1 for _ in range(n+1) ]for _ in range(n+1) ]
     for x,y,w in edges:
         graph[x][y]=w

@@ -9,8 +9,10 @@ class Solution:
         left_max = 0
         right_max = 0
         water = 0
-        
+        #find the water accumulated behind curr_hieght till leftmax,if curr_height<left_max
+        #find the water accumulated behind curr_hieght till rightmax,if curr_height<right_max
         while left < right:
+
             if height[left] < height[right]:
                 if height[left] >= left_max:
                     left_max = height[left]

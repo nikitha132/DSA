@@ -1,4 +1,5 @@
 class Solution:
+    #create dictionary of chars and then check if all of those chars exist with same count
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s)!=len(t):
             return False
