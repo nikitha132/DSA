@@ -22,3 +22,49 @@ class Solution:
                     queue.append((i, j))
 
         return mat
+    
+# 1. store the indexes where we've 0's
+#2. mark the other indexes as -1 //unprocessed
+#3. traverse up,down,right,left of indices stored in queue ( indices have 0  initialy )  to look around for -1
+#4. if found increment the value of that cell and add it to the queue since it's processed (indices have distance added upto nearest 0 now)
+# 5. repeat step 3 (this time we traverse up down right left of indices that have nearest 0 dist) and if found add the nearest 0 distance from queue +1 to that cell
+#6. repeat 5 until queue is empty
+    
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<int[]> queue = new LinkedList<>();
+        int rows=mat.length;
+        int cols=mat[0].length;
+        for(int row=0;row<rows;row++){
+            for(int col=0;col<cols;col++){
+                if(mat[row][col]==0){
+                    int[] pair={row,col};
+                    queue.offer(pair);
+                }
+                else{
+                    mat[row][col]=-1;
+                }
+            }
+        }
+        int [][] directions={{-1,0},{1,0},{0,-1},{0,1}};
+        int row;
+        int col;
+        int [] index;
+        while(!queue.isEmpty()){
+            index=queue.poll();
+            for(int i=0;i<4;i++){
+                    row=index[0] + directions[i][0];
+                    col=index[1] + directions[i][1];
+                    if(0<=row && row<rows && 0<=col && col<cols && mat[row][col]==-1){
+                        mat[row][col]=mat[index[0]][index[1]]+1;
+                        int[] pair={row,col};
+                        queue.offer(pair);
+                    }
+                
+            }
+
+        
+        }
+       return mat; 
+    }
+}

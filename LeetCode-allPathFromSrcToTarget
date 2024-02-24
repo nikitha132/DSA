@@ -11,4 +11,37 @@ class Solution:
                 if u==n:
                     result.append(path + [u])                              
         return result
-            
+
+
+##JAVA
+    
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        Deque<List<Object>> queue=new ArrayDeque<>();
+        List<Object> pair=new ArrayList<>();
+        pair.add(0);
+        List<Integer> paths=new ArrayList<>();
+        paths.add(0);
+        pair.add(paths);
+        queue.offer(pair);
+        int n=graph.length-1;
+        List<List<Integer>> result=new ArrayList<>();
+        while (!queue.isEmpty()){
+            List<Object> temp=queue.poll();
+            int v=(int)temp.get(0);
+            List<Integer> path=(ArrayList<Integer>)temp.get(1);
+            for(int u=0;u<graph[v].length;u++){
+                List<Object> newPair=new ArrayList<>();
+                newPair.add(graph[v][u]);
+                List<Integer> subpath=new ArrayList<Integer>();
+                subpath.addAll(path);
+                subpath.add(graph[v][u]);
+                newPair.add(subpath);
+                queue.offer(newPair);
+                if(graph[v][u]==n){
+                    result.add(subpath);
+                }
+            }
+        }
+        return result;
+}}
